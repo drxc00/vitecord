@@ -1,8 +1,10 @@
 
 export interface User {
     id: string;
+    email: string;
     userName: string;
     password: string; // make sure to hashhhh
+    dob: string;
 }
 
 export interface UserStore {
