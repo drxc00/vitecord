@@ -23,6 +23,17 @@ const Sidebar = () => {
           <SidebarButtons Icon={item.icon} label={item.label} />
         ))}
       </div>
+      <div className="pt-8 pl-6 pr-2">
+        <p className="text-muted-foreground font-semibold text-md">
+          PLAY AGAIN
+        </p>
+      </div>
+      <div className="flex items-center justify-between pt-8 pl-6 pr-6">
+        <p className="text-muted-foreground font-semibold text-md">
+          DIRECT MESSAGES
+        </p>
+        <p className="text-muted-foreground font-semibold text-2xl"> + </p>
+      </div>
     </div>
   );
 };
