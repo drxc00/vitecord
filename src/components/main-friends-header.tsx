@@ -1,10 +1,6 @@
 import { CircleHelp, Inbox, MessageCircle, UserRound } from "lucide-react";
 
-type MainHeaderProps = {
-  activeTab: string;
-};
-
-const MainHeader: React.FC<MainHeaderProps> = ({ activeTab }) => {
+const MainFriendsHeader = () => {
   return (
     <div className="flex p-2 border-b border-b-darker text-[#b5bac1]">
       {/* Friends */}
@@ -33,4 +29,4 @@ const MainHeader: React.FC<MainHeaderProps> = ({ activeTab }) => {
   );
 };
 
-export default MainHeader;
+export default MainFriendsHeader;

@@ -1,6 +1,6 @@
 import ChannelBar from "@/components/channel-bar";
 import Layout from "@/components/layout";
-import MainHeader from "@/components/main-header";
+import MainFriendsView from "@/components/main-friends-view";
 import Sidebar from "@/components/sidebar";
 import { useState } from "react";
 
@@ -18,7 +18,7 @@ export default function HomePage() {
         </div>
         {/* main panel goes here */}
         <main className="w-full">
-          <MainHeader activeTab={activeTab} />
+          {activeTab === "Friends" && <MainFriendsView />}
         </main>
       </div>
     </Layout>
