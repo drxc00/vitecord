@@ -1,8 +1,10 @@
+import { Toaster } from "./ui/toaster";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="bg-background text-foreground font-sans">
+        <div className="font-sans">
             {children}
+            <Toaster />
         </div>
     )
 }
