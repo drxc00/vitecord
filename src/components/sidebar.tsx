@@ -1,11 +1,13 @@
 import { UserRound, CircleGauge, Store } from "lucide-react";
-import { useState } from "react";
 import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
 
-const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState("Friends");
+type SidebarProps = {
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+};
 
+const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   return (
     <div className="flex flex-col">
       <div className="p-2">

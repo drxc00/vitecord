@@ -1,8 +1,12 @@
 import ChannelBar from "@/components/channel-bar";
 import Layout from "@/components/layout";
+import MainHeader from "@/components/main-header";
 import Sidebar from "@/components/sidebar";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [activeTab, setActiveTab] = useState("Friends");
+
   return (
     <Layout>
       <div className="flex">
@@ -10,10 +14,12 @@ export default function HomePage() {
           <ChannelBar />
         </div>
         <div className="h-screen bg-primary w-80 max-w-80">
-          <Sidebar />
+          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
         {/* main panel goes here */}
-        <main className=""></main>
+        <main className="w-full">
+          <MainHeader activeTab={activeTab} />
+        </main>
       </div>
     </Layout>
   );
