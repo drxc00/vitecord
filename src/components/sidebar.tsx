@@ -1,6 +1,7 @@
 import { UserRound, CircleGauge, Store } from "lucide-react";
 import { useState } from "react";
 import { Separator } from "./ui/separator";
+import { Badge } from "./ui/badge";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("Friends");
@@ -54,16 +55,21 @@ const Sidebar = () => {
           onClick={() => setActiveTab("Shop")}
         >
           <div className="flex items-center justify-start font-semibold">
-            <Store className="w-6 h-6" />
-            <span className="ml-4">Shop</span>
+            <div className="flex flex-1">
+              <Store className="w-6 h-6" />
+              <span className="ml-4">Shop</span>
+            </div>
+            <div>
+              <Badge className="bg-[#da373c] pl-2 pr-2 pt-0 pb-0 text-xs font-semibold text-[#ffffff] hover:bg-[#da373c] hover:text-[#ffffff]">
+                NEW
+              </Badge>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="pt-8 pl-6 pr-2">
-        <p className="text-muted-foreground font-semibold text-md">
-          PLAY AGAIN
-        </p>
+      <div className="pt-4 pl-4">
+        <p className="text-muted-foreground font-bold text-xs">PLAY AGAIN</p>
       </div>
     </div>
   );
