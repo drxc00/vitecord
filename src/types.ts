@@ -7,6 +7,18 @@ export interface User {
     dob: string;
 }
 
+export interface LoginUser {
+    email: string;
+    password: string;
+}
+
+export interface Auth {
+    user: LoginUser | null;
+    isAuthenticated: boolean;
+    login: (user: LoginUser) => void;
+    logout: () => void;
+}
+
 export interface UserStore {
     users: User[];
     addUser: (user: User) => void;
