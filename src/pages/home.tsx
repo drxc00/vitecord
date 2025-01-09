@@ -9,7 +9,7 @@ export default function HomePage() {
         <div className="h-screen bg-darker w-20 max-w-20">
           <ChannelBar />
         </div>
-        <div className="h-screen bg-primary w-60 max-w-60">
+        <div className="h-screen bg-primary w-80 max-w-80">
           <Sidebar />
         </div>
         {/* main panel goes here */}
