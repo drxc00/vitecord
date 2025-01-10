@@ -1,6 +1,7 @@
 import { Compass, Plus } from "lucide-react";
 import { Separator } from "./ui/separator";
 import discordIcon from "@/assets/images/discord-icon.png";
+import { CreateServerDialog } from "./create-server-dialog";
 
 const ChannelBar = () => {
   return (
@@ -15,9 +16,7 @@ const ChannelBar = () => {
       </div>
       {/* Add Server */}
       <div className="p-1 pl-2 pr-2">
-        <div className="flex items-center justify-center text-[#248045] bg-primary p-2 rounded-full transition-all duration-150 ease-in-out hover:bg-[#248045] hover:text-[#ffffff] hover:rounded-2xl hover:cursor-pointer">
-          <Plus className="h-8 w-8" />
-        </div>
+        <CreateServerDialog />
       </div>
       {/* Discover */}
       <div className="p-1 pl-2 pr-2">
