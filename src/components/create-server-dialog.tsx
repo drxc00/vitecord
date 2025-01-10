@@ -10,6 +10,7 @@ import { PublicUser, Server } from "@/types";
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
+import { generateInviteCode } from "@/lib/utils";
 
 export function CreateServerDialog() {
     const [currentView, setCurrentView] = useState<'main' | 'create' | 'join'>('main');
@@ -68,7 +69,7 @@ export function CreateServerDialog() {
                                         id: serverId,
                                         name: serverName,
                                         channels: [],
-                                        inviteCode: "",
+                                        inviteCode: generateInviteCode(),
                                         members: [
                                             pUser
                                         ],
