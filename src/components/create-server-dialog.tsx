@@ -4,9 +4,21 @@ import CreateServerIcon from "@/assets/create_server_icon.svg";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { FormControl, FormInput, FormLabel } from "./auth/form-control";
+import { useAuth } from "@/states/users";
+import { useServersStore } from "@/states/servers";
+import { PublicUser, Server } from "@/types";
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router";
 
 export function CreateServerDialog() {
     const [currentView, setCurrentView] = useState<'main' | 'create' | 'join'>('main');
+    const [serverName, setServerName] = useState('');
+    const navigate = useNavigate();
+
+    // Stores
+    const { user } = useAuth();
+    const { addServer } = useServersStore();
 
     const renderContent = () => {
         switch (currentView) {
@@ -21,7 +33,7 @@ export function CreateServerDialog() {
                             <div className="w-full">
                                 <FormControl>
                                     <FormLabel className="text-left text-xs font-semibold text-primary-foreground">SERVER NAME</FormLabel>
-                                    <FormInput placeholder="Server Name" />
+                                    <FormInput placeholder="Server Name" value={serverName} onChange={(e) => setServerName(e.target.value)} />
                                     <p className="text-xs text-muted-foreground text-left">By creating a server, you agree to Discord's <span className="text-blue-400">Community Guidelines</span>.</p>
                                 </FormControl>
                             </div>
@@ -30,7 +42,41 @@ export function CreateServerDialog() {
                             <Button variant="ghost" className="text-muted-foreground" onClick={() => setCurrentView('main')}>
                                 Back
                             </Button>
-                            <Button className="bg-blue-600 rounded-sm text-white hover:bg-green-600">Create</Button>
+                            <Button
+                                className="bg-blue-600 rounded-sm text-white hover:bg-green-600"
+                                onClick={() => {
+                                    if (serverName === '') {
+                                        toast({
+                                            title: 'Please enter a server name',
+                                            variant: 'destructive',
+                                        });
+                                        return;
+                                    }
+
+                                    // Create server
+                                    const serverId = uuidv4();
+
+                                    // Convert user to public user
+                                    const pUser = {
+                                        id: user?.id as string,
+                                        userName: user?.userName as string,
+                                        email: user?.email as string,
+                                    } as PublicUser
+
+                                    // Add server to store
+                                    addServer({
+                                        id: serverId,
+                                        name: serverName,
+                                        channels: [],
+                                        inviteCode: "",
+                                        members: [
+                                            pUser
+                                        ],
+                                        owner: pUser,
+                                    } as Server);
+                                    navigate(`/channels/${serverId}`);
+                                }}
+                            >Create</Button>
                         </div>
                     </div>
                 );
