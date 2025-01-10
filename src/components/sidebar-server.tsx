@@ -9,11 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  ArrowDown,
   Bell,
   Calendar,
   CalendarCheck,
   CalendarPlus,
+  ChevronDown,
   CirclePlus,
   Diamond,
   FolderPlus,
@@ -35,14 +35,20 @@ import {
 } from "./ui/dialog";
 import { InvitePeopleDialog } from "./invite-people-dialog";
 import { useState } from "react";
+import { ChannelGroup } from "./channel-group";
 
 const SidebarServer = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id, channelId } = useParams<{ id: string, channelId: string }>();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Subscribe to server updates
   const server = useServersStore((state) =>
     state.servers.find((server) => server.id === id)
   );
+
+  // Separate channels into text and voice
+  const textChannels = server?.channels.filter((channel) => channel.type === "text") || [];
+  const voiceChannels = server?.channels.filter((channel) => channel.type === "voice") || [];
 
   const { user } = useAuth((state) => state);
 
@@ -51,7 +57,7 @@ const SidebarServer = () => {
       <div>
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger
-            className="focus-visible:ring-offset-0 focus-visible:ring-0"
+            className="focus-visible:ring-offset-0 focus-visible:ring-0 h-14"
             asChild
           >
             <Button
@@ -59,7 +65,7 @@ const SidebarServer = () => {
               className="flex items-center justify-between w-full border-b-[#202225] border-t-0 border-l-0 border-r-0 border-b-2 shadow-sm rounded-none bg-primary focus-visible:ring-0"
             >
               <p>{server ? server.name : ""}</p>
-              <ArrowDown />
+              <ChevronDown className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="ring-0 focus:ring-0 w-60 bg-[#111214] text-[#ffebfa] border-none">
@@ -161,8 +167,9 @@ const SidebarServer = () => {
         <div className="p-2 pt-2">
           <Separator className="bg-[#3e3c44] w-full h-[1px]" />
         </div>
-        <div>
-          hello
+        <div className="flex flex-col gap-2">
+          <ChannelGroup channels={textChannels} selectedChannelId={channelId || ""} type="text" />
+          <ChannelGroup channels={voiceChannels} selectedChannelId={channelId || ""} type="voice" />
         </div>
       </div>
       {/* account section */}

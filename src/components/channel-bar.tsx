@@ -42,7 +42,7 @@ const ChannelBar = () => {
         {getUserServers(user as LoginUser).map((server: Server) => (
           <div
             onClick={() => {
-              navigate(`/channels/${server.id}`);
+              navigate(`/channels/${server.id}/${server.channels[0].id}`);
             }}
             key={server.id}
             className="flex items-center justify-center text-[#ffffff] bg-primary w-12 h-12 rounded-full hover:cursor-pointer"

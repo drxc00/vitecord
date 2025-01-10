@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FormControl, FormInput, FormLabel } from "./auth/form-control";
 import { useAuth } from "@/states/users";
 import { useServersStore } from "@/states/servers";
-import { PublicUser, Server } from "@/types";
+import { Channel, PublicUser, Server } from "@/types";
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
@@ -64,11 +64,21 @@ export function CreateServerDialog() {
                                         email: user?.email as string,
                                     } as PublicUser
 
+                                    // Add default "general" channel
+                                    const defaultChannel = {
+                                        id: uuidv4(),
+                                        name: "general",
+                                        chats: [],
+                                        type: "text",
+                                    } as Channel;
+
                                     // Add server to store
                                     addServer({
                                         id: serverId,
                                         name: serverName,
-                                        channels: [],
+                                        channels: [
+                                            defaultChannel
+                                        ],
                                         inviteCode: generateInviteCode(),
                                         members: [
                                             pUser
