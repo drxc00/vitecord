@@ -38,7 +38,7 @@ import { useState } from "react";
 import { ChannelGroup } from "./channel-group";
 
 const SidebarServer = () => {
-  const { id, channelId } = useParams<{ id: string, channelId: string }>();
+  const { id, channelId } = useParams<{ id: string; channelId: string }>();
   const [isOpen, setIsOpen] = useState(false);
 
   // Subscribe to server updates
@@ -47,8 +47,10 @@ const SidebarServer = () => {
   );
 
   // Separate channels into text and voice
-  const textChannels = server?.channels.filter((channel) => channel.type === "text") || [];
-  const voiceChannels = server?.channels.filter((channel) => channel.type === "voice") || [];
+  const textChannels =
+    server?.channels.filter((channel) => channel.type === "text") || [];
+  const voiceChannels =
+    server?.channels.filter((channel) => channel.type === "voice") || [];
 
   const { user } = useAuth((state) => state);
 
@@ -78,11 +80,14 @@ const SidebarServer = () => {
               className="focus:bg-[#5865f2] text-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between"
               // Prevent event building since we are triggering the dialog from the dropdown menu
               onClick={(e) => {
-                e.preventDefault()
-                setIsOpen(false)
+                e.preventDefault();
+                setIsOpen(false);
               }}
             >
-              <InvitePeopleDialog inviteCode={server?.inviteCode || ""} serverName={server?.name || ""} />
+              <InvitePeopleDialog
+                inviteCode={server?.inviteCode || ""}
+                serverName={server?.name || ""}
+              />
             </DropdownMenuItem>
             <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
               Server Settings
@@ -168,15 +173,28 @@ const SidebarServer = () => {
           <Separator className="bg-[#3e3c44] w-full h-[1px]" />
         </div>
         <div className="flex flex-col gap-2">
-          <ChannelGroup channels={textChannels} selectedChannelId={channelId || ""} type="text" />
-          <ChannelGroup channels={voiceChannels} selectedChannelId={channelId || ""} type="voice" />
+          <ChannelGroup
+            channels={textChannels}
+            selectedChannelId={channelId || ""}
+            type="text"
+          />
+          <ChannelGroup
+            channels={voiceChannels}
+            selectedChannelId={channelId || ""}
+            type="voice"
+          />
         </div>
       </div>
       {/* account section */}
       <div className="max-h-12 h-12 bg-[#232428] flex items-center justify-between">
         <div className="p-2">
           <div className="flex items-center justify-center max-w-36 hover:bg-[#3e3c44] p-1 pr-4 rounded-xl">
-            <div className="bg-blue-700 p-2 h-8 w-8 min-w-8 rounded-full"></div>
+            <div
+              className=" p-2 h-8 w-8 min-w-8 rounded-full bg-cover"
+              style={{
+                backgroundImage: `url(https://placecats.com/millie/75/75)`,
+              }}
+            ></div>
             <p className="ml-2 truncate">{user?.userName}</p>
           </div>
         </div>

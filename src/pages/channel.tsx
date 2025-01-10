@@ -5,7 +5,6 @@ import Layout from "@/components/layout";
 import { useServersStore } from "@/states/servers";
 import { useNavigate, useParams } from "react-router";
 
-
 export default function Channel() {
   const { id } = useParams<{ id: string }>();
   const { servers } = useServersStore((state) => state);
@@ -20,10 +19,14 @@ export default function Channel() {
   return (
     <Layout>
       <main className="w-full">
-        <ChannelNavBar />
-        <div className="flex flex-row gap-2 w-full">
-          <Messages />
-          <MembersBar members={server?.members || []} />
+        <div className="flex flex-col w-full h-full">
+          <div>
+            <ChannelNavBar />
+          </div>
+          <div className="flex flex-row h-full">
+            <Messages />
+            <MembersBar members={server?.members || []} />
+          </div>
         </div>
       </main>
     </Layout>
