@@ -5,17 +5,15 @@ export interface User {
     userName: string;
     password: string; // make sure to hashhhh
     dob: string;
+    servers: Server[];
 }
 
-export interface LoginUser {
-    email: string;
-    password: string;
-}
+export interface LoginUser extends Omit<User, 'password'> {}
 
 export interface Auth {
     user: LoginUser | null;
     isAuthenticated: boolean;
-    login: (user: LoginUser) => void;
+    login: (credentials: {email: string, password: string}) => void;
     logout: () => void;
 }
 

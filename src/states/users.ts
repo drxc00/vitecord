@@ -30,23 +30,42 @@ export const useAuth = create<Auth>()(
         (set, get) => ({
             user: null,
             isAuthenticated: false,
-            login: (user: LoginUser) => {
-                // Check if user exists
-                // Access local storage
-                const usersStorage = JSON.parse(localStorage.getItem('users') || '');
-                console.log(usersStorage);
-                const users = usersStorage.state.users;
-                const existingUser = users.find((u: User) => u.email === user.email);
-                if (!existingUser) {
-                        console.log('User does not exist');
-                    return;
+            login: (credentials: { email: string, password: string }) => {
+
+                // Check if users exist
+                if (localStorage.getItem('users') === null) {
+                    throw new Error('No users found');
                 }
+
+                // Check if the user exists
+                const usersStorage = JSON.parse(localStorage.getItem('users') || '');
+                const users = usersStorage.state.users;
+                const existingUser = users.find((u: User) => u.email === credentials.email);
+                if (!existingUser) {
+                    throw new Error('User does not exist');
+                }
+
+                // Check if password is correct
+                if (existingUser.password !== credentials.password) {
+                    throw new Error('Invalid password');
+                }
+
+                // Set user
+                // We only return the values that we need
+                const user: LoginUser = {
+                    id: existingUser.id,
+                    email: existingUser.email,
+                    userName: existingUser.userName,
+                    dob: existingUser.dob,
+                    servers: existingUser.servers,
+                }
+
                 set((state) => ({ ...state, user: user, isAuthenticated: true }))
             },
             logout: () => set((state) => ({ ...state, user: null, isAuthenticated: false })),
         }), {
         name: 'auth',
-        storage: createJSONStorage(() => localStorage),
+        storage: createJSONStorage(() => sessionStorage),
     }
     )
 );

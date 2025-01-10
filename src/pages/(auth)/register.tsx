@@ -28,7 +28,7 @@ export default function Register() {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/');
+            navigate('/channels');
         }
     }, [isAuthenticated])
 
@@ -93,6 +93,7 @@ export default function Register() {
             userName: username,
             password: password,
             dob,
+            servers: []
         });
         navigate('/login');
     }
