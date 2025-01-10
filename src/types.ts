@@ -33,6 +33,8 @@ export interface Chat {
 
 export interface Channel {
     id: string;
+    name: string;
+    type: "text" | "voice";
     chats: Chat[];
 }
 
@@ -47,5 +49,6 @@ export interface Server {
 
 export interface ServerStore {
     servers: Server[];
+    addChannel: (channel: Channel, serverId: string) => void;
     addServer: (server: Server) => void;
 }
