@@ -1,8 +1,10 @@
+import { useAuth } from "@/states/users";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
 
 export function NavBar() {
     const navigate = useNavigate();
+    const { user } = useAuth();
     return (
         <div className="flex justify-between items-center p-4 px-40">
             <div>
@@ -20,14 +22,25 @@ export function NavBar() {
             </ul>
 
             <div>
-                <Button
-                    onClick={() => {
-                        navigate('/login');
-                    }}
-                    className="bg-white text-primary rounded-full"
-                >
-                    Login
-                </Button>
+                {user ? (
+                    <Button
+                        onClick={() => {
+                            navigate('/channels');
+                        }}
+                        className="bg-white text-primary rounded-full"
+                    >
+                        Dashboard
+                    </Button>
+                ) : (
+                    <Button
+                        onClick={() => {
+                            navigate('/login');
+                        }}
+                        className="bg-white text-primary rounded-full"
+                    >
+                        Login
+                    </Button>
+                )}
             </div>
         </div>
     )
