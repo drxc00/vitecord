@@ -6,7 +6,7 @@ import { useServersStore } from "@/states/servers";
 import { useNavigate, useParams } from "react-router";
 
 export default function Channel() {
-  const { id } = useParams<{ id: string }>();
+  const { id, channelId } = useParams<{ id: string; channelId: string }>();
   const { servers } = useServersStore((state) => state);
   const navigate = useNavigate();
 
@@ -16,15 +16,20 @@ export default function Channel() {
   if (!server) {
     navigate("/channels");
   }
+
+  const activeChannel = server?.channels.find(
+    (channel) => channel.id === channelId
+  );
+
   return (
     <Layout>
       <main className="w-full">
         <div className="flex flex-col w-full h-full">
           <div>
-            <ChannelNavBar />
+            <ChannelNavBar activeChannel={activeChannel} />
           </div>
           <div className="flex flex-row h-full">
-            <Messages />
+            <Messages activeChannel={activeChannel} />
             <MembersBar members={server?.members || []} />
           </div>
         </div>

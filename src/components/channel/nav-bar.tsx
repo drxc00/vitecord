@@ -5,24 +5,12 @@ import { MdPeopleAlt } from "react-icons/md";
 import { Input } from "../ui/input";
 import { BiSolidInbox } from "react-icons/bi";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
-import { useParams } from "react-router";
-import { useServersStore } from "@/states/servers";
 
-export function ChannelNavBar() {
-  // TODO: Add the server name to the navbar
-  // Should be the current channel name: # general ***
+interface Channel {
+  name: string;
+}
 
-  const { id, channelId } = useParams<{ id: string; channelId: string }>();
-  const server = useServersStore((state) =>
-    state.servers.find((server) => server.id === id)
-  );
-
-  const activeChannel = server?.channels.find(
-    (channel) => channel.id === channelId
-  );
-
-  console.log(activeChannel);
-
+export function ChannelNavBar({ activeChannel }: { activeChannel: Channel }) {
   return (
     <div className="w-full h-14 z-50 bg-background border-b-[#202225] border-b-2 shadow-sm flex items-center justify-between px-4 ">
       <div className="flex items-center gap-2">
