@@ -34,9 +34,12 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "./ui/dialog";
+import { InvitePeopleDialog } from "./invite-people-dialog";
+import { useState } from "react";
 
 const SidebarServer = () => {
   const { id } = useParams<{ id: string }>();
+  const [isOpen, setIsOpen] = useState(false);
 
   const server = useServersStore((state) =>
     state.servers.find((server) => server.id === id)
@@ -47,7 +50,7 @@ const SidebarServer = () => {
   return (
     <>
       <div>
-        <DropdownMenu>
+        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger
             className="focus-visible:ring-offset-0 focus-visible:ring-0"
             asChild
@@ -66,9 +69,15 @@ const SidebarServer = () => {
               <Diamond />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="focus:bg-[#5865f2] text-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
-              Invite People
-              <UserPlus />
+            <DropdownMenuItem
+              className="focus:bg-[#5865f2] text-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between"
+              // Prevent event building since we are triggering the dialog from the dropdown menu
+              onClick={(e) => {
+                e.preventDefault()
+                setIsOpen(false)
+              }}
+            >
+              <InvitePeopleDialog inviteCode={server?.inviteCode || ""} serverName={server?.name || ""} />
             </DropdownMenuItem>
             <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
               Server Settings
