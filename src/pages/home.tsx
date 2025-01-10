@@ -1,6 +1,7 @@
 import ChannelBar from "@/components/channel-bar";
 import Layout from "@/components/layout";
 import MainFriendsView from "@/components/main-friends-view";
+import MainShopView from "@/components/main-shop-view";
 import Sidebar from "@/components/sidebar";
 import { useAuth } from "@/states/users";
 import { useState, useEffect } from "react";
@@ -13,7 +14,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [user, navigate]);
 
@@ -29,6 +30,7 @@ export default function HomePage() {
         {/* main panel goes here */}
         <main className="w-full">
           {activeTab === "Friends" && <MainFriendsView />}
+          {activeTab === "Shop" && <MainShopView />}
         </main>
       </div>
     </Layout>
