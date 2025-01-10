@@ -1,12 +1,10 @@
 import auth_bg_img from '@/assets/images/auth_bg_img.png';
 import { FormControl, FormInput, FormLabel } from '@/components/auth/form-control';
-import Layout from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectItem, SelectValue, SelectContent, SelectTrigger } from '@/components/ui/select';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-// import { hashPassword } from '@/lib/hash';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/hooks/use-toast';
