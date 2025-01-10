@@ -16,7 +16,9 @@ const MainFriendsView = () => {
         {/* Sidebar */}
         <div className="w-3/12 h-full border-l border-[#3f4147]">
           <div>
-            <p className="text-xl p-4 font-bold text-[#ffffff]">Active Now</p>
+            <p className="text-xl p-4 font-bold text-[rgb(255,255,255)]">
+              Active Now
+            </p>
           </div>
           <div className="flex flex-col items-center justify-center p-4 text-[#ffffff]">
             <p className="text-md font-semibold">It's quiet for now...</p>
