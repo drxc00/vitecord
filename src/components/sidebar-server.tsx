@@ -24,7 +24,6 @@ import {
   Shapes,
   Shield,
   Square,
-  UserPlus,
 } from "lucide-react";
 import { useAuth } from "@/states/users";
 import { Separator } from "@radix-ui/react-separator";
@@ -161,6 +160,9 @@ const SidebarServer = () => {
         </div>
         <div className="p-2 pt-2">
           <Separator className="bg-[#3e3c44] w-full h-[1px]" />
+        </div>
+        <div>
+          hello
         </div>
       </div>
       {/* account section */}
