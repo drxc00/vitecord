@@ -27,7 +27,7 @@ export const useUsersStore = create<UserStore>()(
 
 export const useAuth = create<Auth>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             user: null,
             isAuthenticated: false,
             login: (credentials: { email: string, password: string }) => {

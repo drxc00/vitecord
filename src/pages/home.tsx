@@ -1,4 +1,3 @@
-import ChannelBar from "@/components/channel-bar";
 import Layout from "@/components/layout";
 import MainFriendsView from "@/components/main-friends-view";
 import MainShopView from "@/components/main-shop-view";
@@ -20,10 +19,7 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <div className="flex">
-        <div className="h-screen bg-darker w-20 max-w-20">
-          <ChannelBar />
-        </div>
+      <div className="flex w-full">
         <div className="h-screen bg-primary w-80 max-w-80">
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>

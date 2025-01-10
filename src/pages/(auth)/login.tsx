@@ -8,7 +8,6 @@ import { FormControl } from "@/components/auth/form-control";
 import { useAuth } from "@/states/users";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
-import Layout from "@/components/layout";
 
 
 export default function Login() {
@@ -49,7 +48,6 @@ export default function Login() {
         }
     }
     return (
-        <Layout>
             <div style={{
                 backgroundImage: `url(${auth_bg_img})`,
                 backgroundSize: 'cover',
@@ -89,6 +87,5 @@ export default function Login() {
                     </CardContent>
                 </Card>
             </div>
-        </Layout>
     )
 }

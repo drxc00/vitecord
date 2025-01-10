@@ -8,12 +8,14 @@ export interface User {
     servers: Server[];
 }
 
-export interface LoginUser extends Omit<User, 'password'> {}
+export interface PublicUser extends Omit<User, 'password' | 'servers'> { }
+
+export interface LoginUser extends Omit<User, 'password'> { }
 
 export interface Auth {
     user: LoginUser | null;
     isAuthenticated: boolean;
-    login: (credentials: {email: string, password: string}) => void;
+    login: (credentials: { email: string, password: string }) => void;
     logout: () => void;
 }
 
@@ -26,7 +28,7 @@ export interface UserStore {
 export interface Chat {
     id: string;
     message: string;
-    sender: User
+    sender: PublicUser;
 }
 
 export interface Channel {
@@ -38,6 +40,9 @@ export interface Server {
     id: string;
     name: string;
     channels: Channel[];
+    inviteCode: string;
+    members: PublicUser[];
+    owner: PublicUser;
 }
 
 export interface ServerStore {
