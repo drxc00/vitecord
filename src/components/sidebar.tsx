@@ -8,7 +8,7 @@ interface SidebarProps {
 const Sidebar = ({ isChannelPage }: SidebarProps) => {
   console.log(isChannelPage);
   return (
-    <div className="max-w-80 h-screen max-h-screen flex flex-col">
+    <div className="max-w-80 h-screen max-h-screen flex flex-col overflow-hidden">
       {/* if it is channel page, then it is home page simply render the homepage sidebar if it is not simply render the channel sidebar */}
 
       {isChannelPage ? <SidebarChannel /> : <SidebarServer />}

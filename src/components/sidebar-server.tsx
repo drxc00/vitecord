@@ -11,6 +11,8 @@ import {
 import {
   ArrowDown,
   Bell,
+  Calendar,
+  CalendarCheck,
   CalendarPlus,
   CirclePlus,
   Diamond,
@@ -25,6 +27,13 @@ import {
   UserPlus,
 } from "lucide-react";
 import { useAuth } from "@/states/users";
+import { Separator } from "@radix-ui/react-separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "./ui/dialog";
 
 const SidebarServer = () => {
   const { id } = useParams<{ id: string }>();
@@ -102,7 +111,50 @@ const SidebarServer = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="flex-1">Channels</div>
+      {/* Channel Goes here */}
+      <div className="flex-1 w-full">
+        <div className="p-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="w-full flex items-center justify-start p-2 text-muted-foreground hover:bg-[#35373c] hover:rounded-lg hover:cursor-pointer">
+                <Calendar className="w-5 h-5" />
+                <p className="ml-2">Events</p>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="max-w-[600px] max-h-[600px] p-0 m-0 border-0">
+              <DialogHeader className="bg-[#1e1f22] p-4 text-bold">
+                <div className="flex space-x-3 items-center justify-start">
+                  <div className="flex">
+                    <Calendar className="h-6 w-6" />
+                    <p className="ml-2">Events</p>
+                  </div>
+                  <div className="w-[1px] pt-2 pb-2 bg-[#2d2f33]"></div>
+                  <div className="p-1 rounded-md bg-[#4752c4] text-xs">
+                    Create Event
+                  </div>
+                </div>
+              </DialogHeader>
+              <div className="h-80 p-4 pr-8 pl-8 w-full flex flex-col items-center justify-center">
+                <CalendarCheck className="w-16 h-16" />
+                <p className="mt-4 text-2xl font-bold">
+                  There are no upcoming events.
+                </p>
+                <p className="text-center">
+                  Schedule an event for any planned activity in your server. You
+                  can give other people permission to create events in
+                </p>
+                <span className="text-[#04a1ed]">
+                  Server Settings {">"} Role .
+                </span>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+        <div className="p-2 pt-2">
+          <Separator className="bg-[#3e3c44] w-full h-[1px]" />
+        </div>
+      </div>
+      {/* account section */}
       <div className="max-h-12 h-12 bg-[#232428] flex items-center justify-between">
         <div className="p-2">
           <div className="flex items-center justify-center max-w-36 hover:bg-[#3e3c44] p-1 pr-4 rounded-xl">

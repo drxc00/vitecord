@@ -10,10 +10,14 @@ import { useNavigate } from "react-router";
 const getUserServers = (user: LoginUser) => {
   const servers = useServersStore.getState().servers;
   // Filter server if user is owner or member
-  const userServers = servers.filter((server: Server) => server.owner.id === user?.id || server.members.some((member: PublicUser) => member.id === user?.id));
+  const userServers = servers.filter(
+    (server: Server) =>
+      server.owner.id === user?.id ||
+      server.members.some((member: PublicUser) => member.id === user?.id)
+  );
   // Reverse the order of the servers
   return userServers.reverse();
-}
+};
 
 const ChannelBar = () => {
   const { user } = useAuth();
@@ -21,9 +25,12 @@ const ChannelBar = () => {
 
   return (
     <div className="flex flex-col space-y-1">
-      <div className="p-2" onClick={() => {
-        navigate('/channels');
-      }}>
+      <div
+        className="p-2"
+        onClick={() => {
+          navigate("/channels");
+        }}
+      >
         <div className="bg-[#5865f2] rounded-2xl p-2">
           <img src={discordIcon} />
         </div>
@@ -33,12 +40,13 @@ const ChannelBar = () => {
       </div>
       <div className="p-1 pl-2 pr-2 space-y-2">
         {getUserServers(user as LoginUser).map((server: Server) => (
-          <div 
+          <div
             onClick={() => {
               navigate(`/channels/${server.id}`);
             }}
-            key={server.id} 
-            className="flex items-center justify-center text-[#ffffff] bg-primary w-12 h-12 rounded-full hover:cursor-pointer">
+            key={server.id}
+            className="flex items-center justify-center text-[#ffffff] bg-primary w-12 h-12 rounded-full hover:cursor-pointer"
+          >
             {server.name.charAt(0).toUpperCase()}
           </div>
         ))}
