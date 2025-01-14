@@ -7,9 +7,9 @@ export interface User {
   servers: Server[];
 }
 
-export interface PublicUser extends Omit<User, "password" | "servers"> {}
+export interface PublicUser extends Omit<User, "password" | "servers"> { }
 
-export interface LoginUser extends Omit<User, "password"> {}
+export interface LoginUser extends Omit<User, "password"> { }
 
 export interface Auth {
   user: LoginUser | null;
@@ -28,6 +28,7 @@ export interface Chat {
   id: string;
   message: string;
   sender: PublicUser;
+  createdAt: Date;
 }
 
 export interface Channel {
@@ -50,5 +51,6 @@ export interface ServerStore {
   servers: Server[];
   addChannel: (channel: Channel, serverId: string) => void;
   addServer: (server: Server) => void;
+  addMessage: (message: Chat, channelId: string, serverId: string) => void;
   removeChannel: (channelId: string, serverId: string) => void;
 }
