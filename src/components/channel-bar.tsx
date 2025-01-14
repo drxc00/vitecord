@@ -55,7 +55,7 @@ const ChannelBar = () => {
             onMouseEnter={() => setHoveredIcon(server.id)}
             onMouseLeave={() => setHoveredIcon(null)}
             onClick={() => {
-              navigate(`/channels/${server.id}/${server.channels[0].id}`);
+              navigate(`/channels/${server.id}/${server.channels.at(0)?.id}`);
             }}
             key={server.id}
             className="flex items-center justify-center text-[#ffffff] bg-primary w-12 h-12 rounded-full hover:cursor-pointer hover:bg-[#5865f2] hover:rounded-xl transition-all duration-150 ease-in-out"

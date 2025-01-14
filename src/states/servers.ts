@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Server, ServerStore, Channel } from "../types";
+import { Server, ServerStore, Channel, Chat } from "../types";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useServersStore = create<ServerStore>()(
@@ -44,6 +44,19 @@ export const useServersStore = create<ServerStore>()(
           ...state,
           servers: state.servers.filter((server) => server.id !== id),
         })),
+      addMessage: (message: Chat, channelId: string, serverId: string) => {
+        set((state) => {
+          const server = state.servers.find((server) => server.id === serverId);
+          const channel = server?.channels.find((channel) => channel.id === channelId);
+
+          if (!server || !channel) throw new Error("Server or channel not found");
+          
+          if (channel) {
+            channel.chats.push(message);
+          }
+          return state;
+        })
+      }
     }),
     {
       name: "servers",

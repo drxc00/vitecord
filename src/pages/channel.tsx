@@ -4,6 +4,7 @@ import { ChannelNavBar } from "@/components/channel/nav-bar";
 import Layout from "@/components/layout";
 import { useServersStore } from "@/states/servers";
 import { useNavigate, useParams } from "react-router";
+import { Channel as ChannelType } from "@/types";
 
 export default function Channel() {
   const { id, channelId } = useParams<{ id: string; channelId: string }>();
@@ -26,10 +27,10 @@ export default function Channel() {
       <main className="w-full">
         <div className="flex flex-col w-full h-full">
           <div>
-            <ChannelNavBar activeChannel={activeChannel} />
+            <ChannelNavBar activeChannel={activeChannel as ChannelType} />
           </div>
           <div className="flex flex-row h-full">
-            <Messages activeChannel={activeChannel} />
+            <Messages activeChannel={activeChannel as ChannelType} serverId={server?.id || ""} />
             <MembersBar members={server?.members || []} />
           </div>
         </div>
