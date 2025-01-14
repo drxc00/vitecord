@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# Vitecord
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An offline Discord clone built with modern web technologies.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Modern UI inspired by Discord
+- Server and channel creation
+- User authentication
+- Responsive design (in progress)
+- Customizable interface
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- ⚡️ [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- 🟦 [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
+- 🐻 [Zustand](https://zustand-demo.pmnd.rs/) - State management
+- 🎨 [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- 🛠️ [ShadCN](https://ui.shadcn.com/) - Unstyled, accessible UI components
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Project Structure
+
 ```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+├── assets/          # Static assets
+├── components/       # UI components
+├── pages/            # Pages
+├── types/            # TypeScript types
+├── utils/            # Utility functions
+├── vite.config.ts    # Vite configuration
+├── index.html        # Entry point
+├── main.ts           # Main application entry point
+├── tailwind.config.ts # Tailwind CSS configuration
+├── tsconfig.json      # TypeScript configuration
 ```
+Each directory and file serves a specific purpose in the application architecture:
+- **assets**: Contains static files used throughout the application
+- **components**: Houses reusable UI components following component-based architecture
+- **pages**: Contains the main views and routes of the application
+- **types**: Central location for TypeScript type definitions
+- **utils**: Shared utility functions and helpers
+- **config files**: Configuration for Vite, Tailwind, and TypeScript
