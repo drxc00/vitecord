@@ -15,6 +15,8 @@ import { generateInviteCode } from "@/lib/utils";
 export function CreateServerDialog() {
     const [currentView, setCurrentView] = useState<'main' | 'create' | 'join'>('main');
     const [serverName, setServerName] = useState('');
+
+    const [serverInvite, setServerInvite] = useState('');
     const navigate = useNavigate();
 
     // Stores
@@ -100,17 +102,21 @@ export function CreateServerDialog() {
                                 Enter an invite below to join an existing server.
                             </p>
                             <div className="w-full">
-                                <FormControl>
-                                    <FormLabel className="text-left text-xs font-semibold text-primary-foreground">INVITE LINK <span className="text-red-500">*</span></FormLabel>
-                                    <FormInput placeholder="Enter the code lol" />
-                                </FormControl>
+                                    <FormControl>
+                                        <FormLabel className="text-left text-xs font-semibold text-primary-foreground">INVITE LINK <span className="text-red-500">*</span></FormLabel>
+                                        <FormInput placeholder="Enter the code lol" value={serverInvite} onChange={(e) => setServerInvite(e.target.value)} />
+                                    </FormControl>
                             </div>
                         </div>
                         <div className="flex items-center justify-between gap-2 p-4 bg-dark/60 w-full">
                             <Button variant="ghost" className="text-muted-foreground" onClick={() => setCurrentView('main')}>
                                 Back
                             </Button>
-                            <Button className="bg-blue-600 rounded-sm text-white hover:bg-green-600">Join Server</Button>
+                            <Button 
+                            onClick={() => {
+                                console.log(serverInvite);
+                            }}
+                            className="bg-blue-600 rounded-sm text-white hover:bg-green-600">Join Server</Button>
                         </div>
                     </div>
                 );
