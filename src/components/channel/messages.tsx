@@ -36,26 +36,21 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
     scrollToBottom();
   }, [activeChannel.chats, message]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(message);
+    if (message.trim() === "") return;
+
+    const newMessage: Chat = {
+      id: uuidv4(),
+      content: message,
+      author: user?.name || "Unknown",
+      timestamp: new Date().toISOString(),
+    };
+
+    addMessage(newMessage, activeChannel.id, serverId);
     setMessage("");
-    addMessage(
-      {
-        id: uuidv4(),
-        message: message,
-        sender: {
-          id: user?.id || "",
-          userName: user?.userName || "",
-          email: user?.email || "",
-          dob: user?.dob || "",
-        },
-        createdAt: new Date(),
-      } as Chat,
-      activeChannel.id,
-      serverId
-    );
   };
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex-1 flex flex-col overflow-y-auto max-h-[calc(100vh-8rem)] no-scrollbar">
@@ -70,7 +65,7 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
           <PlusCircle className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
           <form onSubmit={handleSubmit} className="w-full">
             <Input
-              className="bg-[#383a40] border-none h-12 pl-10 pr-10 focus-visible:ring-transparent"
+              className="bg-[#383a40] border-none h-12 pl-10 pr-40 focus-visible:ring-transparent"
               placeholder={`Message #${activeChannel.name}`}
               type="text"
               value={message}
