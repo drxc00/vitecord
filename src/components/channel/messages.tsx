@@ -105,7 +105,7 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
               rows={1}
             />
           </form>
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-4">
+          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-4 mr-4">
             <Gift className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
             <ImagePlay className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
             <Sticker className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
