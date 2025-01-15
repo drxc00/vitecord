@@ -58,27 +58,23 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
     );
   };
 
-  // Function to handle the textarea resizing with a max height and scroll
   const handleInputResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
-    textarea.style.height = "auto"; // Reset height to auto to shrink when deleting text
-    textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on content
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
 
-    // Limit the height and allow scrolling
     if (textarea.scrollHeight > 150) {
-      // Set a maximum height for the textarea
-      textarea.style.height = "150px"; // Max height of the textarea
-      textarea.style.overflowY = "auto"; // Enable vertical scrolling
+      textarea.style.height = "150px";
+      textarea.style.overflowY = "auto";
     } else {
-      textarea.style.overflowY = "hidden"; // Hide scrollbar if under the max height
+      textarea.style.overflowY = "hidden";
     }
   };
 
-  // Handle Enter key to submit the message
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault(); // Prevent new line
-      handleSubmit(e as any); // Trigger submit
+      e.preventDefault();
+      handleSubmit(e as any);
     }
   };
 
