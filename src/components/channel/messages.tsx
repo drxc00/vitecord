@@ -21,11 +21,10 @@ interface MessageInterface {
 }
 
 export function Messages({ activeChannel, serverId }: MessageInterface) {
-
   const [message, setMessage] = useState("");
   const { user } = useAuth();
 
-  const { addMessage } = useServersStore()
+  const { addMessage } = useServersStore();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -39,23 +38,27 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(message)
+    console.log(message);
     setMessage("");
-    addMessage({
-      id: uuidv4(),
-      message: message,
-      sender: {
-        id: user?.id || "",
-        userName: user?.userName || "",
-        email: user?.email || "",
-        dob: user?.dob || "",
-      },
-      createdAt: new Date(),
-      } as Chat, activeChannel.id, serverId)
-  }
+    addMessage(
+      {
+        id: uuidv4(),
+        message: message,
+        sender: {
+          id: user?.id || "",
+          userName: user?.userName || "",
+          email: user?.email || "",
+          dob: user?.dob || "",
+        },
+        createdAt: new Date(),
+      } as Chat,
+      activeChannel.id,
+      serverId
+    );
+  };
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex-1 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-8rem)] no-scrollbar">
+      <div className="flex-1 flex flex-col overflow-y-auto max-h-[calc(100vh-8rem)] no-scrollbar">
         {activeChannel.chats.map((chat) => (
           <Message key={chat.id} message={chat} />
         ))}
