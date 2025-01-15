@@ -50,9 +50,7 @@ const SidebarChannel = () => {
         </div>
       </div>
 
-      <div className="pt-4 pl-4">
-        <p className="text-muted-foreground font-bold text-xs">PLAY AGAIN</p>
-      </div>
+      <div className="pt-4 pl-4"></div>
     </>
   );
 };

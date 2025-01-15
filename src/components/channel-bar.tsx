@@ -49,7 +49,11 @@ const ChannelBar = () => {
       <div className="mt-1 pl-4 pr-4">
         <Separator className="bg-[#35363c]" />
       </div>
-      <div className="p-1 pl-2 pr-2 space-y-2">
+      <div
+        className={`pl-2 pr-2 ${
+          getUserServers(user as LoginUser).length > 0 ? "space-y-2" : ""
+        }`}
+      >
         {getUserServers(user as LoginUser).map((server: Server) => (
           <div
             onMouseEnter={() => setHoveredIcon(server.id)}
@@ -69,6 +73,7 @@ const ChannelBar = () => {
           </div>
         ))}
       </div>
+
       {/* Add Server */}
       <div
         className="flex items-center justify-center p-1 pl-2 pr-2"
