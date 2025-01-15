@@ -65,12 +65,20 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
     textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on content
 
     // Limit the height and allow scrolling
-    if (textarea.scrollHeight > 500) {
+    if (textarea.scrollHeight > 150) {
       // Set a maximum height for the textarea
-      textarea.style.height = "500px"; // Max height of the textarea
+      textarea.style.height = "150px"; // Max height of the textarea
       textarea.style.overflowY = "auto"; // Enable vertical scrolling
     } else {
       textarea.style.overflowY = "hidden"; // Hide scrollbar if under the max height
+    }
+  };
+
+  // Handle Enter key to submit the message
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // Prevent new line
+      handleSubmit(e as any); // Trigger submit
     }
   };
 
@@ -90,14 +98,15 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
             {/* Use textarea instead of input */}
             <textarea
               ref={textareaRef}
-              className="bg-[#383a40] border-none pl-10 pr-44 focus-visible:ring-transparent w-full overflow-x-auto resize-none min-h-[3rem] flex items-center justify-start py-3"
+              className="bg-[#383a40] border-none pl-10 pr-40 focus-visible:ring-transparent w-full overflow-x-auto resize-none min-h-[3rem] flex items-center justify-start py-3"
               placeholder={`Message #${activeChannel.name}`}
               value={message}
               onChange={(e) => {
                 setMessage(e.target.value);
                 handleInputResize(e); // Resize the textarea on text change
               }}
-              rows={1} // Start with a single row
+              onKeyDown={handleKeyDown} // Handle Enter key
+              rows={1}
             />
           </form>
           <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-4">
