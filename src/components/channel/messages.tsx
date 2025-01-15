@@ -36,21 +36,26 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
     scrollToBottom();
   }, [activeChannel.chats, message]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (message.trim() === "") return;
-
-    const newMessage: Chat = {
-      id: uuidv4(),
-      content: message,
-      author: user?.name || "Unknown",
-      timestamp: new Date().toISOString(),
-    };
-
-    addMessage(newMessage, activeChannel.id, serverId);
+    console.log(message);
     setMessage("");
+    addMessage(
+      {
+        id: uuidv4(),
+        message: message,
+        sender: {
+          id: user?.id || "",
+          userName: user?.userName || "",
+          email: user?.email || "",
+          dob: user?.dob || "",
+        },
+        createdAt: new Date(),
+      } as Chat,
+      activeChannel.id,
+      serverId
+    );
   };
-
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex-1 flex flex-col overflow-y-auto max-h-[calc(100vh-8rem)] no-scrollbar">
