@@ -21,7 +21,7 @@ export function CreateServerDialog() {
 
     // Stores
     const { user } = useAuth();
-    const { addServer } = useServersStore();
+    const { servers, addServer, addUserToServer } = useServersStore();
 
     const renderContent = () => {
         switch (currentView) {
@@ -87,7 +87,7 @@ export function CreateServerDialog() {
                                         ],
                                         owner: pUser,
                                     } as Server);
-                                    navigate(`/channels/${serverId}`);
+                                    navigate(`/channels/${serverId}/${defaultChannel.id}`);
                                 }}
                             >Create</Button>
                         </div>
@@ -102,21 +102,31 @@ export function CreateServerDialog() {
                                 Enter an invite below to join an existing server.
                             </p>
                             <div className="w-full">
-                                    <FormControl>
-                                        <FormLabel className="text-left text-xs font-semibold text-primary-foreground">INVITE LINK <span className="text-red-500">*</span></FormLabel>
-                                        <FormInput placeholder="Enter the code lol" value={serverInvite} onChange={(e) => setServerInvite(e.target.value)} />
-                                    </FormControl>
+                                <FormControl>
+                                    <FormLabel className="text-left text-xs font-semibold text-primary-foreground">INVITE LINK <span className="text-red-500">*</span></FormLabel>
+                                    <FormInput placeholder="Enter the code lol" value={serverInvite} onChange={(e) => setServerInvite(e.target.value)} />
+                                </FormControl>
                             </div>
                         </div>
                         <div className="flex items-center justify-between gap-2 p-4 bg-dark/60 w-full">
                             <Button variant="ghost" className="text-muted-foreground" onClick={() => setCurrentView('main')}>
                                 Back
                             </Button>
-                            <Button 
-                            onClick={() => {
-                                console.log(serverInvite);
-                            }}
-                            className="bg-blue-600 rounded-sm text-white hover:bg-green-600">Join Server</Button>
+                            <Button
+                                onClick={() => {
+                                    // Filter through the servers and find the server with the invite code
+                                    const server = servers.find((server) => server.inviteCode === serverInvite);
+                                    if (server) {
+                                        // Add the user to the server
+                                        addUserToServer({
+                                            id: user?.id as string,
+                                            userName: user?.userName as string,
+                                            email: user?.email as string,
+                                        } as PublicUser, server.id);
+                                        navigate(`/channels/${server.id}/${server.channels[0].id}`);
+                                    }
+                                }}
+                                className="bg-blue-600 rounded-sm text-white hover:bg-green-600">Join Server</Button>
                         </div>
                     </div>
                 );

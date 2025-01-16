@@ -1,3 +1,5 @@
+import { Chat } from "@/types";
+
 export function Message({ message }: { message: Chat }) {
   return (
     <div className="flex flex-row items-start justify-start gap-4 px-4 hover:bg-dark/60 py-0.5 pt-2 pb-2 max-w-full">

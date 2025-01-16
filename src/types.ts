@@ -53,4 +53,5 @@ export interface ServerStore {
   addServer: (server: Server) => void;
   addMessage: (message: Chat, channelId: string, serverId: string) => void;
   removeChannel: (channelId: string, serverId: string) => void;
+  addUserToServer: (user: PublicUser, serverId: string) => void;
 }

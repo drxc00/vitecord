@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Server, ServerStore, Channel, Chat } from "../types";
+import { Server, ServerStore, Channel, Chat, PublicUser } from "../types";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useServersStore = create<ServerStore>()(
@@ -14,9 +14,9 @@ export const useServersStore = create<ServerStore>()(
             // Check if the current server id is the same as the server id
             server.id === serverId
               ? // If it is, add the channel to the server
-                { ...server, channels: [...server.channels, channel] }
+              { ...server, channels: [...server.channels, channel] }
               : // If it isn't, return the server
-                server
+              server
           ),
         }));
       },
@@ -28,11 +28,11 @@ export const useServersStore = create<ServerStore>()(
             // Check if the current server id is the same as the server id
             server.id === serverId
               ? {
-                  ...server,
-                  channels: server.channels.filter(
-                    (channel) => channel.id !== channelId
-                  ),
-                }
+                ...server,
+                channels: server.channels.filter(
+                  (channel) => channel.id !== channelId
+                ),
+              }
               : server
           ),
         }));
@@ -45,18 +45,35 @@ export const useServersStore = create<ServerStore>()(
           servers: state.servers.filter((server) => server.id !== id),
         })),
       addMessage: (message: Chat, channelId: string, serverId: string) => {
-        set((state) => {
-          const server = state.servers.find((server) => server.id === serverId);
-          const channel = server?.channels.find((channel) => channel.id === channelId);
-
-          if (!server || !channel) throw new Error("Server or channel not found");
-          
-          if (channel) {
-            channel.chats.push(message);
-          }
-          return state;
-        })
-      }
+        set((state) => ({
+          servers: state.servers.map((server) => 
+            server.id === serverId
+              ? {
+                  ...server,
+                  // Map through the channels and add the message to the channel
+                  channels: server.channels.map((channel) =>
+                    channel.id === channelId
+                      ? {
+                          ...channel,
+                          chats: [...channel.chats, message] // Append the message to the channel
+                        }
+                      : channel // Return the channel --Default behavior
+                  )
+                }
+              : server // Return the server --Default behavior
+          )
+        }));
+      },
+      addUserToServer: (user: PublicUser, serverId: string) => {
+        set((state) => ({
+          servers: state.servers.map((server) => (
+            // Check if the current server id is the same as the server id
+            server.id === serverId
+              ? { ...server, members: [...server.members, user] } // Append the user to the server
+              : server) // Return the server --Default behavior
+          ),
+        }));
+      },
     }),
     {
       name: "servers",

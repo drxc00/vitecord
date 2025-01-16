@@ -6,25 +6,35 @@ import {
   Smile,
   Sticker,
 } from "lucide-react";
-import { Input } from "../ui/input";
 import { useState, useRef, useEffect } from "react";
 import { useServersStore } from "@/states/servers";
 import { useAuth } from "@/states/users";
 import { v4 as uuidv4 } from "uuid";
 import { Chat } from "@/types";
-import { Channel } from "@/types";
 import { Message } from "./message";
 
 interface MessageInterface {
-  activeChannel: Channel;
+  currentChannelId: string;
+  currentChannelName: string;
   serverId: string;
+  messages: Chat[];
 }
 
-export function Messages({ activeChannel, serverId }: MessageInterface) {
+export function Messages({ currentChannelId, currentChannelName, serverId, messages }: MessageInterface) {
   const [message, setMessage] = useState("");
   const { user } = useAuth();
-
   const { addMessage } = useServersStore();
+
+  // Add storage event listener
+  useEffect(() => {
+    const handleStorageChange = () => {
+      // Force state update when localStorage changes
+      useServersStore.persist.rehydrate();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -35,11 +45,11 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [activeChannel.chats, message]);
+  }, [message, message]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(message);
+    if (message.trim() === "") return;
     setMessage("");
     addMessage(
       {
@@ -53,7 +63,7 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
         },
         createdAt: new Date(),
       } as Chat,
-      activeChannel.id,
+      currentChannelId,
       serverId
     );
   };
@@ -81,7 +91,7 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex-1 flex flex-col overflow-y-auto max-h-[calc(100vh-8rem)] no-scrollbar">
-        {activeChannel.chats.map((chat) => (
+        {messages.map((chat) => (
           <Message key={chat.id} message={chat} />
         ))}
         <div ref={messagesEndRef} />
@@ -95,7 +105,7 @@ export function Messages({ activeChannel, serverId }: MessageInterface) {
             <textarea
               ref={textareaRef}
               className="bg-[#383a40] border-none pl-10 pr-40 focus-visible:ring-transparent w-full overflow-x-auto resize-none min-h-[3rem] flex items-center justify-start py-3"
-              placeholder={`Message #${activeChannel.name}`}
+              placeholder={`Message #${currentChannelName}`}
               value={message}
               onChange={(e) => {
                 setMessage(e.target.value);

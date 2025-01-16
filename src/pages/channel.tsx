@@ -31,8 +31,10 @@ export default function Channel() {
           </div>
           <div className="flex flex-row h-full">
             <Messages
-              activeChannel={activeChannel as ChannelType}
+              currentChannelName={activeChannel?.name || ""}
+              currentChannelId={activeChannel?.id || ""}
               serverId={server?.id || ""}
+              messages={activeChannel?.chats || []}
             />
             <MembersBar members={server?.members || []} />
           </div>
