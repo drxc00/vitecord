@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useNavigate, useParams } from "react-router";
 import { CreateChannelDialog } from "./create-channel-dialog";
 import { useServersStore } from "@/states/servers";
+import { NotificationBadge } from "./notification-badge";
 
 interface ChannelGroupProps {
   type: "text" | "voice";
@@ -27,6 +28,7 @@ export function ChannelGroup({
   const navigate = useNavigate();
 
   const removeChannel = useServersStore((state) => state.removeChannel);
+  const { getChannelNotifications } = useServersStore();
 
   const handleDeleteChannel = (channelId: string) => {
     if (id) {
@@ -78,7 +80,8 @@ export function ChannelGroup({
                 <Hash className="w-4 h-4" />
                 <p className="ml-1">{channel.name}</p>
               </div>
-              <div className="flex">
+              <div className="flex gap-2">
+                <NotificationBadge count={getChannelNotifications(id || "", channel.id)} />
                 <Trash
                   className="h-4 w-4 hover:text-[#dbdee1] mr-1"
                   onClick={(e) => {

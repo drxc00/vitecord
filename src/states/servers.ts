@@ -4,8 +4,9 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useServersStore = create<ServerStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       servers: [],
+      notifications: {},
       addChannel: (channel: Channel, serverId: string) => {
         // Set the channel to the server
         set((state) => ({
@@ -43,25 +44,66 @@ export const useServersStore = create<ServerStore>()(
         set((state) => ({
           ...state,
           servers: state.servers.filter((server) => server.id !== id),
+          notifications: {
+            ...state.notifications,
+            [id]: {}
+          }
         })),
       addMessage: (message: Chat, channelId: string, serverId: string) => {
-        set((state) => ({
-          servers: state.servers.map((server) => 
-            server.id === serverId
-              ? {
+        set((state) => {
+
+          // Initialize the notifications state for the server if it doesn't exist
+          if (!state.notifications[serverId]) {
+            state.notifications[serverId] = {};
+          }
+          if (!state.notifications[serverId][channelId]) {
+            state.notifications[serverId][channelId] = 0;
+          }
+
+          return ({
+            // Initialize the notifications state for the server if it doesn't exist
+            servers: state.servers.map((server) =>
+              server.id === serverId
+                ? {
                   ...server,
                   // Map through the channels and add the message to the channel
                   channels: server.channels.map((channel) =>
                     channel.id === channelId
                       ? {
-                          ...channel,
-                          chats: [...channel.chats, message] // Append the message to the channel
-                        }
+                        ...channel,
+                        chats: [...channel.chats, message] // Append the message to the channel
+                      }
                       : channel // Return the channel --Default behavior
                   )
                 }
-              : server // Return the server --Default behavior
-          )
+                : server // Return the server --Default behavior
+            ),
+            // We add a notification to the notification tracker state
+            notifications: {
+              // Spread the current notifications state
+              ...state.notifications,
+              // Add a new notification to the server
+              [serverId]: {
+                // Spread the current server notifications
+                ...state.notifications[serverId],
+                // Add a new notification to the channel
+                [channelId]: state.notifications[serverId][channelId] + 1
+              }
+            }
+          })
+        });
+      },
+      clearNotification: (serverId: string, channelId: string) => {
+        set((state) => ({
+          // Spread the current notifications state
+          notifications: {
+            ...state.notifications,
+            // Reset the notification for the server and channel
+            [serverId]: {
+              ...state.notifications[serverId],
+              [channelId]: 0
+            }
+          }
         }));
       },
       addUserToServer: (user: PublicUser, serverId: string) => {
@@ -73,6 +115,18 @@ export const useServersStore = create<ServerStore>()(
               : server) // Return the server --Default behavior
           ),
         }));
+      },
+      getServerNotifications: (serverId: string) => {
+        const serverNotifications = get().notifications[serverId];
+        if (!serverNotifications) return 0;
+
+        return Object.values(serverNotifications).reduce((sum, count) => sum + count, 0);
+      },
+      getChannelNotifications: (serverId: string, channelId: string) => {
+        const channelNotifications = get().notifications[serverId]?.[channelId];
+        if (!channelNotifications) return 0;
+
+        return channelNotifications;
       },
     }),
     {

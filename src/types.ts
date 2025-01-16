@@ -47,11 +47,20 @@ export interface Server {
   owner: PublicUser;
 }
 
+export interface Notification {
+  [serverId: string]: {
+    [channelId: string]: number;
+  };
+}
+
 export interface ServerStore {
   servers: Server[];
+  notifications: Notification;
   addChannel: (channel: Channel, serverId: string) => void;
   addServer: (server: Server) => void;
   addMessage: (message: Chat, channelId: string, serverId: string) => void;
   removeChannel: (channelId: string, serverId: string) => void;
   addUserToServer: (user: PublicUser, serverId: string) => void;
+  getServerNotifications: (serverId: string) => number;
+  getChannelNotifications: (serverId: string, channelId: string) => number;
 }

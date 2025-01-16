@@ -6,7 +6,8 @@ import { useServersStore } from "@/states/servers";
 import { LoginUser, Server, PublicUser } from "@/types";
 import { useAuth } from "@/states/users";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { NotificationBadge } from "./notification-badge";
 
 const getUserServers = (user: LoginUser) => {
   const servers = useServersStore.getState().servers;
@@ -20,10 +21,22 @@ const getUserServers = (user: LoginUser) => {
   return userServers.reverse();
 };
 
+
 const ChannelBar = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const { getServerNotifications } = useServersStore();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      // Force state update when localStorage changes
+      useServersStore.persist.rehydrate();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   return (
     <div className="flex flex-col space-y-1">
@@ -50,26 +63,29 @@ const ChannelBar = () => {
         <Separator className="bg-[#35363c]" />
       </div>
       <div
-        className={`pl-2 pr-2 ${
-          getUserServers(user as LoginUser).length > 0 ? "space-y-2" : ""
-        }`}
+        className={`pl-2 pr-2 ${getUserServers(user as LoginUser).length > 0 ? "space-y-2" : ""
+          }`}
       >
         {getUserServers(user as LoginUser).map((server: Server) => (
-          <div
-            onMouseEnter={() => setHoveredIcon(server.id)}
-            onMouseLeave={() => setHoveredIcon(null)}
-            onClick={() => {
-              navigate(`/channels/${server.id}/${server.channels.at(0)?.id}`);
-            }}
-            key={server.id}
-            className="flex items-center justify-center text-[#ffffff] bg-primary w-12 h-12 rounded-full hover:cursor-pointer hover:bg-[#5865f2] hover:rounded-xl transition-all duration-150 ease-in-out"
-          >
-            {server.name.charAt(0).toUpperCase()}
-            {hoveredIcon === server.id && (
-              <div className="absolute left-[70px] transform bg-[#1e1f22] text-[#ffffff] font-medium text-sm p-2 rounded-md shadow-lg">
-                {server.name}
+          <div key={server.id}>
+            <div
+              onMouseEnter={() => setHoveredIcon(server.id)}
+              onMouseLeave={() => setHoveredIcon(null)}
+              onClick={() => {
+                navigate(`/channels/${server.id}/${server.channels.at(0)?.id}`);
+              }}
+              className="flex items-center justify-center text-[#ffffff] bg-primary w-12 h-12 rounded-full hover:cursor-pointer hover:bg-[#5865f2] hover:rounded-xl transition-all duration-150 ease-in-out relative overflow-visible"
+            >
+              {server.name.charAt(0).toUpperCase()}
+              {hoveredIcon === server.id && (
+                <div className="absolute left-[70px] transform bg-[#1e1f22] text-[#ffffff] font-medium text-sm p-2 rounded-md shadow-lg">
+                  {server.name}
+                </div>
+              )}
+              <div className="absolute -bottom-1 -right-1">
+                <NotificationBadge count={getServerNotifications(server.id)} />
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
