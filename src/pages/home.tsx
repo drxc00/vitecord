@@ -22,7 +22,6 @@ export default function HomePage() {
         {/* main panel goes here */}
         <main className="w-full">
           {activeTab === "Friends" && <MainFriendsView />}
-          {activeTab === "Shop" && <MainShopView />}
         </main>
       </div>
     </Layout>
