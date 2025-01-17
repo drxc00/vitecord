@@ -191,7 +191,7 @@ const SidebarServer = () => {
       {/* account section */}
       <div className="max-h-12 h-12 bg-[#232428] flex items-center justify-between ">
         <div className="p-2">
-          <div className="flex items-center justify-center max-w-36 hover:bg-[#3e3c44] p-1 pr-4 rounded-xl text-[#f8f8f8] hover:cursor-pointer">
+          <div className="flex items-center justify-center max-w-36 hover:bg-[#3e3c44] p-1 pr-4 rounded-xl text-[#f8f8f8] hover:cursor-pointe">
             <div
               className=" p-2 h-8 w-8 min-w-8 rounded-full bg-cover"
               style={{
@@ -201,10 +201,16 @@ const SidebarServer = () => {
             <p className="ml-2 truncate">{user?.userName}</p>
           </div>
         </div>
-        <div className="flex space-x-2 mr-4 text-muted-foreground hover:cursor-pointer">
-          <Mic className="w-5 h-5 hover:text-[#dbdee1]" />
-          <Headset className="w-5 h-5 hover:text-[#dbdee1]" />
-          <Settings className="w-5 h-5 hover:text-[#dbdee1]" />
+        <div className="flex items-center justify-end h-full mr-2 p-0 text-muted-foreground hover:cursor-pointer">
+          <div className="p-2 hover:bg-[#383940] rounded-md hover:text-[#dbdee1]">
+            <Mic className="w-5 h-5 min-w-5 min-h-5 hover:text-[#dbdee1]" />
+          </div>
+          <div className="p-2 hover:bg-[#383940] rounded-md hover:text-[#dbdee1]">
+            <Headset className="w-5 h-5 min-w-5 min-h-5 hover:text-[#dbdee1] hover:bg-[#383940]" />
+          </div>
+          <div className="p-2 hover:bg-[#383940] rounded-md hover:text-[#dbdee1]">
+            <Settings className="w-5 h-5 min-w-5 min-h-5 hover:text-[#dbdee1] hover:bg-[#383940]" />
+          </div>
         </div>
       </div>
     </>
