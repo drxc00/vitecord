@@ -10,20 +10,28 @@ const MainFriendsHeader = () => {
           <span className="ml-2 font-bold">Friends</span>
         </div>
         <div className="h-full w-[1px] ml-4 bg-[#3e4047]"></div>
-        <div className="ml-6 font-semibold bg-[#3f4248] text-[#ffffff] pl-2 pr-2 pt-0 pb-0 rounded-md hover:cursor-pointer">
-          Online
-        </div>
-        <div className="ml-10 font-semibold hover:cursor-pointer">All</div>
-        <div className="ml-10 font-semibold hover:cursor-pointer">Pending</div>
-        <div className="ml-10 font-semibold hover:cursor-pointer">Blocked</div>
-        <div className="ml-10 font-semibold bg-[#248045] pl-2 pr-2 pt-0 pb-0 rounded-md hover:cursor-pointer">
-          Add Friend
+        <div className="flex items-center justify-center space-x-2">
+          <div className="ml-6 font-semibold bg-[#3f4248] text-[#ffffff] pl-2 pr-2 pt-0 pb-0 rounded-md hover:cursor-pointer">
+            Online
+          </div>
+          <div className="p-0 pl-2 pr-2 rounded-lg font-semibold hover:cursor-pointer hover:bg-[#35373c] hover:text-[#f8f8f8]">
+            All
+          </div>
+          <div className="p-0 pl-2 pr-2 rounded-lg font-semibold hover:cursor-pointer hover:bg-[#35373c] hover:text-[#f8f8f8]">
+            Pending
+          </div>
+          <div className="p-0 pl-2 pr-2 rounded-lg font-semibold hover:cursor-pointer hover:bg-[#35373c] hover:text-[#f8f8f8]">
+            Blocked
+          </div>
+          <div className="font-semibold bg-[#248045] pl-2 pr-2 pt-0 pb-0 rounded-md hover:cursor-pointer">
+            Add Friend
+          </div>
         </div>
       </div>
-      <div className="flex items-center space-x-4">
-        <MessageCircle />
-        <Inbox />
-        <CircleHelp />
+      <div className="flex items-center space-x-4 mr-2">
+        <MessageCircle className="hover:cursor-pointer hover:text-[#f8f8f8]" />
+        <Inbox className="hover:cursor-pointer hover:text-[#f8f8f8]" />
+        <CircleHelp className="hover:cursor-pointer hover:text-[#f8f8f8]" />
       </div>
     </div>
   );
