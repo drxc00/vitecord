@@ -54,7 +54,7 @@ export function ChannelGroup({
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger className="w-full">
         <div className="flex items-center justify-between cursor-pointer text-xs font-bold text-muted-foreground w-full">
-          <div className="flex items-center justify-start">
+          <div className="flex items-center justify-start hover:text-[#dbdee1]">
             <ChevronDown className={`w-4 h-4 ${!isOpen ? "-rotate-90" : ""}`} />
             <p className="uppercase">{type} channels</p>
           </div>
@@ -71,9 +71,9 @@ export function ChannelGroup({
             <div
               key={channel.id}
               className={cn(
-                "flex items-center justify-between p-1 mx-2 mb-1 text-muted-foreground hover:bg-[#35373c] px-1 font-semibold hover:rounded-md hover:cursor-pointer",
+                "flex items-center justify-between p-1 mx-2 mb-1 text-muted-foreground hover:bg-[#35373c] px-1 font-semibold hover:rounded-md hover:cursor-pointer hover:text-[#dbdee7]",
                 selectedChannelId === channel.id
-                  ? "bg-[#35373c] rounded-md"
+                  ? "bg-[#35373c] rounded-md text-[#dbdee7] hover:text-[#dbdee1]"
                   : ""
               )}
               onClick={() => {
