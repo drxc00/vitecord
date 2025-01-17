@@ -24,12 +24,12 @@ export default function Channel() {
 
   return (
     <Layout>
-      <main className="w-full">
+      <main className="w-full h-screen overflow-hidden">
         <div className="flex flex-col w-full h-full">
           <div>
             <ChannelNavBar activeChannel={activeChannel as ChannelType} />
           </div>
-          <div className="flex flex-row h-full">
+          <div className="flex flex-row flex-1 overflow-hidden">
             <Messages
               currentChannelName={activeChannel?.name || ""}
               currentChannelId={activeChannel?.id || ""}

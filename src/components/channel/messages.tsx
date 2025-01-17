@@ -21,7 +21,12 @@ interface MessageInterface {
   messages: Chat[];
 }
 
-export function Messages({ currentChannelId, currentChannelName, serverId, messages }: MessageInterface) {
+export function Messages({
+  currentChannelId,
+  currentChannelName,
+  serverId,
+  messages,
+}: MessageInterface) {
   const [message, setMessage] = useState("");
   const { user } = useAuth();
   const { addMessage, clearNotifications } = useServersStore();
@@ -87,22 +92,25 @@ export function Messages({ currentChannelId, currentChannelName, serverId, messa
   };
 
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="flex-1 flex flex-col overflow-y-auto max-h-[calc(100vh-8rem)] no-scrollbar">
+    <div className="flex flex-col flex-1 h-full overflow-hidden">
+      <div
+        className="flex-1 overflow-y-auto"
+        style={{ scrollbarWidth: "none" }}
+      >
         {messages.map((chat) => (
           <Message key={chat.id} message={chat} />
         ))}
         <div ref={messagesEndRef} />
       </div>
       {/* inputs */}
-      <div className="flex items-center justify-start space-x-2 p-2">
+      <div className="mt-auto p-4 flex space-x-3">
         <div className="relative flex items-center w-full">
           <PlusCircle className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
           <form onSubmit={handleSubmit} className="w-full">
             {/* Use textarea instead of input */}
             <textarea
               ref={textareaRef}
-              className="bg-[#383a40] border-none pl-10 pr-40 focus-visible:ring-transparent w-full overflow-x-auto resize-none min-h-[3rem] flex items-center justify-start py-3"
+              className="bg-[#383a40] border-none pl-10 pr-44 focus-visible:ring-transparent w-full overflow-x-auto resize-none min-h-[3rem] flex items-center justify-start py-3"
               placeholder={`Message #${currentChannelName}`}
               value={message}
               onChange={(e) => {
