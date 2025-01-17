@@ -54,6 +54,7 @@ export function Messages({
     e.preventDefault();
     if (message.trim() === "") return;
     setMessage("");
+    resetTextareaHeight();
     addMessage(
       {
         id: uuidv4(),
@@ -69,6 +70,12 @@ export function Messages({
       currentChannelId,
       serverId
     );
+  };
+
+  const resetTextareaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "3rem";
+    }
   };
 
   const handleInputResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -105,7 +112,7 @@ export function Messages({
       {/* inputs */}
       <div className="mt-auto p-4 flex space-x-3">
         <div className="relative flex items-center w-full">
-          <PlusCircle className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
+          <PlusCircle className="absolute left-2 top-3 text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
           <form onSubmit={handleSubmit} className="w-full">
             {/* Use textarea instead of input */}
             <textarea
@@ -119,16 +126,17 @@ export function Messages({
               }}
               onKeyDown={handleKeyDown} // Handle Enter key
               rows={1}
+              style={{ scrollbarWidth: "none" }}
             />
           </form>
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-4 mr-4">
+          <div className="absolute right-2 top-3 flex space-x-4 mr-4">
             <Gift className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
             <ImagePlay className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
             <Sticker className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
             <Smile className="text-muted-foreground hover:text-[#dbdee1] hover:cursor-pointer" />
           </div>
         </div>
-        <div className="bg-[#383a40] flex items-center justify-center h-12 w-12 max-h-12 max-w-12 p-2 rounded-lg text-muted-foreground hover:cursor-pointer hover:text-[#dbdee1]">
+        <div className="bg-[#383a40] self-end flex items-center justify-center h-12 w-12 max-h-12 max-w-12 p-2 rounded-lg text-muted-foreground hover:cursor-pointer hover:text-[#dbdee1]">
           <Shapes className="h-6 w-6" />
         </div>
       </div>
