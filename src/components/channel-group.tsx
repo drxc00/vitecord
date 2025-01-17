@@ -1,4 +1,4 @@
-import { Channel } from "@/types";
+import { Channel, PublicUser } from "@/types";
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,19 +16,21 @@ interface ChannelGroupProps {
   type: "text" | "voice";
   selectedChannelId: string;
   channels: Channel[];
+  user: PublicUser;
 }
 
 export function ChannelGroup({
   channels,
   type,
   selectedChannelId,
+  user,
 }: ChannelGroupProps) {
   const { id } = useParams<{ id: string }>();
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
   const removeChannel = useServersStore((state) => state.removeChannel);
-  const { getChannelNotifications } = useServersStore();
+  const { getChannelNotifications, clearNotifications } = useServersStore();
 
   const handleDeleteChannel = (channelId: string) => {
     if (id) {
@@ -74,14 +76,18 @@ export function ChannelGroup({
                   ? "bg-[#35373c] rounded-md"
                   : ""
               )}
-              onClick={() => navigate(`/channels/${id}/${channel.id}`)}
+              onClick={() => {
+                navigate(`/channels/${id}/${channel.id}`)
+                // Clear the notifcations of the user
+                clearNotifications(user?.id || "", id || "", channel.id);
+              }}
             >
               <div className="flex items-center justify-center">
                 <Hash className="w-4 h-4" />
                 <p className="ml-1">{channel.name}</p>
               </div>
               <div className="flex gap-2">
-                <NotificationBadge count={getChannelNotifications(id || "", channel.id)} />
+                <NotificationBadge count={getChannelNotifications(user?.id || "", id || "", channel.id)} />
                 <Trash
                   className="h-4 w-4 hover:text-[#dbdee1] mr-1"
                   onClick={(e) => {

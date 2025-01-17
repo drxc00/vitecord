@@ -25,6 +25,14 @@ export function Messages({ currentChannelId, currentChannelName, serverId, messa
   const { user } = useAuth();
   const { addMessage } = useServersStore();
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   // Add storage event listener
   useEffect(() => {
     const handleStorageChange = () => {
@@ -33,19 +41,12 @@ export function Messages({ currentChannelId, currentChannelName, serverId, messa
     };
 
     window.addEventListener('storage', handleStorageChange);
+
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [message, message]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

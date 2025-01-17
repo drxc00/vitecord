@@ -36,6 +36,7 @@ import {
 import { InvitePeopleDialog } from "./invite-people-dialog";
 import { useState } from "react";
 import { ChannelGroup } from "./channel-group";
+import { PublicUser } from "@/types";
 
 const SidebarServer = () => {
   const { id, channelId } = useParams<{ id: string; channelId: string }>();
@@ -175,11 +176,13 @@ const SidebarServer = () => {
         <div className="flex flex-col gap-2">
           <ChannelGroup
             channels={textChannels}
+            user={user as PublicUser}
             selectedChannelId={channelId || ""}
             type="text"
           />
           <ChannelGroup
             channels={voiceChannels}
+            user={user as PublicUser}
             selectedChannelId={channelId || ""}
             type="voice"
           />

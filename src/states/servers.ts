@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Server, ServerStore, Channel, Chat, PublicUser } from "../types";
+import { Server, ServerStore, Channel, Chat, PublicUser, NotificationType } from "../types";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useServersStore = create<ServerStore>()(
@@ -51,59 +51,59 @@ export const useServersStore = create<ServerStore>()(
         })),
       addMessage: (message: Chat, channelId: string, serverId: string) => {
         set((state) => {
+          // Initialize notifications
+          const serverUsers = state.servers.find(server => server.id === serverId)?.members;
+          const otherUsers = serverUsers?.filter(user => user.id !== message.sender.id);
 
-          // Initialize the notifications state for the server if it doesn't exist
-          if (!state.notifications[serverId]) {
-            state.notifications[serverId] = {};
-          }
-          if (!state.notifications[serverId][channelId]) {
-            state.notifications[serverId][channelId] = 0;
-          }
+          // Create notifications object
+          const newNotifications = otherUsers?.reduce((notifs: NotificationType, user: PublicUser) => {
+            // Get the current count of notifications for the user
+            const currentCount = state.notifications[user.id]?.[serverId]?.[channelId] || 0;
+            return {
+              ...notifs,
+              [user.id]: {
+                ...state.notifications[user.id],
+                [serverId]: {
+                  ...state.notifications[user.id]?.[serverId],
+                  [channelId]: currentCount + 1 // Add 1 to the current count
+                }
+              }
+            };
+          }, {} as NotificationType);
 
-          return ({
-            // Initialize the notifications state for the server if it doesn't exist
+          return {
             servers: state.servers.map((server) =>
               server.id === serverId
                 ? {
                   ...server,
-                  // Map through the channels and add the message to the channel
                   channels: server.channels.map((channel) =>
                     channel.id === channelId
-                      ? {
-                        ...channel,
-                        chats: [...channel.chats, message] // Append the message to the channel
-                      }
-                      : channel // Return the channel --Default behavior
+                      ? { ...channel, chats: [...channel.chats, message] }
+                      : channel
                   )
                 }
-                : server // Return the server --Default behavior
+                : server
             ),
-            // We add a notification to the notification tracker state
             notifications: {
-              // Spread the current notifications state
               ...state.notifications,
-              // Add a new notification to the server
-              [serverId]: {
-                // Spread the current server notifications
-                ...state.notifications[serverId],
-                // Add a new notification to the channel
-                [channelId]: state.notifications[serverId][channelId] + 1
-              }
+              ...newNotifications
             }
-          })
+          };
         });
       },
-      clearNotification: (serverId: string, channelId: string) => {
+      clearNotification: (userId: string, serverId: string, channelId: string) => {
         set((state) => ({
-          // Spread the current notifications state
           notifications: {
             ...state.notifications,
-            // Reset the notification for the server and channel
-            [serverId]: {
-              ...state.notifications[serverId],
-              [channelId]: 0
+            [userId]: {
+              ...state.notifications[userId],
+              [serverId]: {
+                ...state.notifications[userId]?.[serverId],
+                [channelId]: 0
+              }
             }
-          }
+          },
+          servers: state.servers
         }));
       },
       addUserToServer: (user: PublicUser, serverId: string) => {
@@ -116,17 +116,34 @@ export const useServersStore = create<ServerStore>()(
           ),
         }));
       },
-      getServerNotifications: (serverId: string) => {
-        const serverNotifications = get().notifications[serverId];
+      getServerNotifications: (userId: string, serverId: string) => {
+        const userNotifications = get().notifications[userId];
+        if (!userNotifications) return 0;
+
+        const serverNotifications = userNotifications[serverId];
         if (!serverNotifications) return 0;
 
         return Object.values(serverNotifications).reduce((sum, count) => sum + count, 0);
       },
-      getChannelNotifications: (serverId: string, channelId: string) => {
-        const channelNotifications = get().notifications[serverId]?.[channelId];
+      getChannelNotifications: (userId: string, serverId: string, channelId: string) => {
+        const channelNotifications = get().notifications[userId]?.[serverId]?.[channelId];
         if (!channelNotifications) return 0;
 
         return channelNotifications;
+      },
+      clearNotifications: (userId: string, serverId: string, channelId: string) => {
+        set((state) => ({
+          notifications: {
+            ...state.notifications,
+            [userId]: {
+              ...state.notifications[userId],
+              [serverId]: {
+                ...state.notifications[userId]?.[serverId],
+                [channelId]: 0
+              }
+            }
+          }
+        }));
       },
     }),
     {

@@ -83,7 +83,7 @@ const ChannelBar = () => {
                 </div>
               )}
               <div className="absolute -bottom-1 -right-1">
-                <NotificationBadge count={getServerNotifications(server.id)} />
+                <NotificationBadge count={getServerNotifications(user?.id || "", server.id)} />
               </div>
             </div>
           </div>
