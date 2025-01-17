@@ -133,10 +133,10 @@ const SidebarServer = () => {
       </div>
       {/* Channel Goes here */}
       <div className="flex-1 w-full">
-        <div className="p-2">
+        <div className="p-1 pr-2 pl-2 pb-0">
           <Dialog>
             <DialogTrigger asChild>
-              <div className="w-full flex items-center justify-start p-2 text-muted-foreground hover:bg-[#35373c] hover:rounded-lg hover:cursor-pointer">
+              <div className="w-full flex items-center justify-start pt-2 pl-1 pr-1 pb-2 text-muted-foreground hover:bg-[#35373c] hover:rounded-lg hover:cursor-pointer hover:text-[#dbdee1]">
                 <Calendar className="w-5 h-5" />
                 <p className="ml-2">Events</p>
               </div>
