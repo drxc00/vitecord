@@ -1,6 +1,5 @@
 import Layout from "@/components/layout";
 import MainFriendsView from "@/components/main-friends-view";
-import MainShopView from "@/components/main-shop-view";
 import { useAuth } from "@/states/users";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
