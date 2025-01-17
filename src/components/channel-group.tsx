@@ -71,13 +71,13 @@ export function ChannelGroup({
             <div
               key={channel.id}
               className={cn(
-                "flex items-center justify-between p-1 mx-2 text-muted-foreground hover:bg-[#35373c] px-1 font-semibold hover:rounded-md hover:cursor-pointer",
+                "flex items-center justify-between p-1 mx-2 mb-1 text-muted-foreground hover:bg-[#35373c] px-1 font-semibold hover:rounded-md hover:cursor-pointer",
                 selectedChannelId === channel.id
                   ? "bg-[#35373c] rounded-md"
                   : ""
               )}
               onClick={() => {
-                navigate(`/channels/${id}/${channel.id}`)
+                navigate(`/channels/${id}/${channel.id}`);
                 // Clear the notifcations of the user
                 clearNotifications(user?.id || "", id || "", channel.id);
               }}
@@ -87,7 +87,13 @@ export function ChannelGroup({
                 <p className="ml-1">{channel.name}</p>
               </div>
               <div className="flex gap-2">
-                <NotificationBadge count={getChannelNotifications(user?.id || "", id || "", channel.id)} />
+                <NotificationBadge
+                  count={getChannelNotifications(
+                    user?.id || "",
+                    id || "",
+                    channel.id
+                  )}
+                />
                 <Trash
                   className="h-4 w-4 hover:text-[#dbdee1] mr-1"
                   onClick={(e) => {
