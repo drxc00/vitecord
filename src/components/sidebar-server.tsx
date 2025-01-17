@@ -57,7 +57,7 @@ const SidebarServer = () => {
 
   return (
     <>
-      <div>
+      <div className="hover:bg-[#f8f8f8]">
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger
             className="focus-visible:ring-offset-0 focus-visible:ring-0 h-14"
@@ -72,13 +72,13 @@ const SidebarServer = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="ring-0 focus:ring-0 w-60 bg-[#111214] text-[#ffebfa] border-none">
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Server Boost
               <Diamond />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="focus:bg-[#5865f2] text-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between"
+              className="focus:bg-[#5865f2] text-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer"
               // Prevent event building since we are triggering the dialog from the dropdown menu
               onClick={(e) => {
                 e.preventDefault();
@@ -90,41 +90,41 @@ const SidebarServer = () => {
                 serverName={server?.name || ""}
               />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Server Settings
               <Settings />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Create Channel
               <CirclePlus />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Create Category
               <FolderPlus />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Create Event
               <CalendarPlus />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               App Directory
               <Shapes />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Notification Settings
               <Bell />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Privacy Settings
               <Shield />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Edit Server Profile
               <Pen />
             </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between">
+            <DropdownMenuItem className="focus:bg-[#5865f2] focus:text-[#ffebfa] flex items-center justify-between hover:cursor-pointer">
               Hide Muted Channels
               <Square />
             </DropdownMenuItem>
