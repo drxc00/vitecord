@@ -1,6 +1,13 @@
 import { PublicUser } from "@/types";
+import { Crown } from "lucide-react";
 
-export function MembersBar({ members }: { members: PublicUser[] }) {
+export function MembersBar({
+  owner,
+  members,
+}: {
+  owner: PublicUser;
+  members: PublicUser[];
+}) {
   const totalOnline = members.length;
 
   return (
@@ -17,7 +24,12 @@ export function MembersBar({ members }: { members: PublicUser[] }) {
                 backgroundImage: `url(https://placecats.com/millie/50/50)`,
               }}
             />
-            <p className="pl-3">{member.userName}</p>
+            <p className="pl-3 flex items-center">
+              {member.userName}
+              {member.id === owner.id && (
+                <Crown className="ml-2 h-4 w-4 text-[#bf902e] fill-[#bf902e]" />
+              )}
+            </p>
           </div>
         </div>
       ))}

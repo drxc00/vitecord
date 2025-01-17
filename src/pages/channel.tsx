@@ -36,7 +36,12 @@ export default function Channel() {
               serverId={server?.id || ""}
               messages={activeChannel?.chats || []}
             />
-            <MembersBar members={server?.members || []} />
+            <MembersBar
+              owner={
+                server?.owner || { id: "", email: "", userName: "", dob: "" }
+              }
+              members={server?.members || []}
+            />
           </div>
         </div>
       </main>
