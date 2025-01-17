@@ -23,7 +23,7 @@ interface MessageInterface {
 export function Messages({ currentChannelId, currentChannelName, serverId, messages }: MessageInterface) {
   const [message, setMessage] = useState("");
   const { user } = useAuth();
-  const { addMessage } = useServersStore();
+  const { addMessage, clearNotifications } = useServersStore();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
@@ -31,6 +31,11 @@ export function Messages({ currentChannelId, currentChannelName, serverId, messa
 
   useEffect(() => {
     scrollToBottom();
+    
+    // Programatically clear notifications for the channel if the user is in the channel
+    if (user?.id) {
+      clearNotifications(user.id, serverId, currentChannelId);
+    }
   }, [messages]);
 
   // Add storage event listener
