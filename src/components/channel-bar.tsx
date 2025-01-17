@@ -6,8 +6,9 @@ import { useServersStore } from "@/states/servers";
 import { LoginUser, Server, PublicUser } from "@/types";
 import { useAuth } from "@/states/users";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NotificationBadge } from "./notification-badge";
+import { useStorageListener } from "@/hooks/use-storage-listener";
 
 const getUserServers = (user: LoginUser) => {
   const servers = useServersStore.getState().servers;
@@ -28,15 +29,8 @@ const ChannelBar = () => {
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
   const { getServerNotifications } = useServersStore();
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      // Force state update when localStorage changes
-      useServersStore.persist.rehydrate();
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  // Use storageListener
+  useStorageListener();
 
   return (
     <div className="flex flex-col space-y-1">

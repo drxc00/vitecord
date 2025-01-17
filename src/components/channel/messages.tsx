@@ -12,6 +12,7 @@ import { useAuth } from "@/states/users";
 import { v4 as uuidv4 } from "uuid";
 import { Chat } from "@/types";
 import { Message } from "./message";
+import { useStorageListener } from "@/hooks/use-storage-listener";
 
 interface MessageInterface {
   currentChannelId: string;
@@ -31,7 +32,7 @@ export function Messages({ currentChannelId, currentChannelName, serverId, messa
 
   useEffect(() => {
     scrollToBottom();
-    
+
     // Programatically clear notifications for the channel if the user is in the channel
     if (user?.id) {
       clearNotifications(user.id, serverId, currentChannelId);
@@ -39,16 +40,7 @@ export function Messages({ currentChannelId, currentChannelName, serverId, messa
   }, [messages]);
 
   // Add storage event listener
-  useEffect(() => {
-    const handleStorageChange = () => {
-      // Force state update when localStorage changes
-      useServersStore.persist.rehydrate();
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  useStorageListener();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
