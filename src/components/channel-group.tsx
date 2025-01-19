@@ -29,26 +29,26 @@ export function ChannelGroup({
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
-  const removeChannel = useServersStore((state) => state.removeChannel);
+  // const removeChannel = useServersStore((state) => state.removeChannel);
   const { getChannelNotifications, clearNotifications } = useServersStore();
 
-  const handleDeleteChannel = (channelId: string) => {
-    if (id) {
-      if (channels.length <= 1) {
-        alert("You cannot delete the last channel.");
-        return;
-      }
-      removeChannel(channelId, id);
-      const remainingChannels = channels.filter(
-        (channel) => channel.id !== channelId
-      );
-      if (remainingChannels.length > 0) {
-        navigate(`/channels/${id}/${remainingChannels[0].id}`);
-      } else {
-        navigate(`/channels/${id}`);
-      }
-    }
-  };
+  // const handleDeleteChannel = (channelId: string) => {
+  //   if (id) {
+  //     if (channels.length <= 1) {
+  //       alert("You cannot delete the last channel.");
+  //       return;
+  //     }
+  //     removeChannel(channelId, id);
+  //     const remainingChannels = channels.filter(
+  //       (channel) => channel.id !== channelId
+  //     );
+  //     if (remainingChannels.length > 0) {
+  //       navigate(`/channels/${id}/${remainingChannels[0].id}`);
+  //     } else {
+  //       navigate(`/channels/${id}`);
+  //     }
+  //   }
+  // };
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -94,13 +94,13 @@ export function ChannelGroup({
                     channel.id
                   )}
                 />
-                <Trash
+                {/* <Trash
                   className="h-4 w-4 hover:text-[#dbdee1] mr-1"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDeleteChannel(channel.id);
                   }}
-                />
+                /> */}
               </div>
             </div>
           );
