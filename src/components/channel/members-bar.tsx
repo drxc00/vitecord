@@ -15,8 +15,11 @@ export function MembersBar({
       <div className="p-4 pb-0 text-xs text-medium text-muted-foreground">
         ONLINE - {totalOnline}
       </div>
-      {members.map((member) => (
-        <div className="flex items-center justify-start space-x-3 pl-2 pr-2">
+      {members.map((member, idx) => (
+        <div
+          key={idx}
+          className="flex items-center justify-start space-x-3 pl-2 pr-2"
+        >
           <div className="flex items-center justify-start hover:bg-[#35373c] w-full p-1 pl-2 pr-2 rounded-md">
             <div
               className="h-8 w-8 rounded-full bg-cover"
