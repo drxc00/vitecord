@@ -25,7 +25,7 @@ An offline Discord clone built with modern web technologies.
 ├── assets/          # Static assets
 ├── components/       # UI components
 ├── pages/            # Pages
-├── types/            # TypeScript types
+├── types.ts            # TypeScript types
 ├── utils/            # Utility functions
 ├── vite.config.ts    # Vite configuration
 ├── index.html        # Entry point
